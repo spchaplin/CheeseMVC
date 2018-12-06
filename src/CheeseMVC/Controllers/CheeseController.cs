@@ -1,4 +1,5 @@
 ﻿using CheeseMVC.Models;
+using CheeseMVC.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
@@ -15,33 +16,36 @@ namespace CheeseMVC.Controllers
 		// GET: /<controller>/
 		public IActionResult Index()
 		{
-			ViewBag.cheeses = CheeseData.GetAll();
+			List<Cheese> cheeses= CheeseData.GetAll();
 
-			return View();
+			return View(cheeses);
 		}
 
 		public IActionResult Add()
 		{
+			AddCheeseViewModel addCheeseViewModel = new AddCheeseViewModel();
 			return View();
 		}
 
 		[HttpPost]
-		[Route("/Cheese/Add")]
-		public IActionResult NewCheese(Cheese newCheese)
+		public IActionResult Add(AddCheeseViewModel addCheeseViewModel)
 		{
 
-			/*what framework does (model binding):
-			 * you must have a default constructor for the model object you're trying to bind to the request
-			 Cheese newCheese= new Cheese();
-			 newCheese.Name = Request.get("name");
-			 newCheese.Description = Request.get("description");
-			 */
+			if (ModelState.IsValid)
+			{
+				Cheese newCheese = new Cheese
+				{
+					Name = addCheeseViewModel.Name,
+					Description = addCheeseViewModel.Description
+				};
 
+				// Add the new cheese to my existing cheeses
+				CheeseData.Add(newCheese);
 
-			// Add the new cheese to my existing cheeses
-			CheeseData.Add(newCheese);
+				return Redirect("/Cheese");
+			}
 
-			return Redirect("/Cheese");
+			return View(addCheeseViewModel);
 		}
 
 		public IActionResult Remove()
