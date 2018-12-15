@@ -6,13 +6,7 @@
         public string Description { get; set; }
         public CheeseType Type { get; set; }
 
-        public int CheeseId { get; set; }
-        private static int nextId = 1;
+		public int ID { get; set; }
 
-        public Cheese()
-        {
-            CheeseId = nextId;
-            nextId++;
-        }
-    }
+	}
 }
