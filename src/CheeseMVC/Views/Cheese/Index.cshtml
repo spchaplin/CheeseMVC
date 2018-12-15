@@ -9,17 +9,19 @@
 
 <table class="table">
 
-    <tr>
-        <th>Name</th>
-        <th>Description</th>
-    </tr>
+	<tr>
+		<th>Name</th>
+		<th>Description</th>
+		<th>Type</th>
+	</tr>
 
     @foreach (var cheese in Model)
     {
-        <tr>
-            <td>@cheese.Name</td>
-            <td>@cheese.Description</td>
-        </tr>
+	<tr>
+		<td>@cheese.Name</td>
+		<td>@cheese.Description</td>
+		<td>@cheese.Type</td>
+	</tr>
     }
 </table>
 
