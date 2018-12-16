@@ -1,6 +1,7 @@
 ﻿using CheeseMVC.Models;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
@@ -8,29 +9,40 @@ using System.Threading.Tasks;
 
 namespace CheeseMVC.ViewModels
 {
-    public class AddCheeseViewModel
-    {
-        [Required]
-        [Display(Name = "Cheese Name")]
-        public string Name { get; set; }
+	public class AddCheeseViewModel
+	{
+		[Required]
+		[Display(Name = "Cheese Name")]
+		public string Name { get; set; }
 
-        [Required(ErrorMessage = "You must give your cheese a description")]
-        public string Description { get; set; }
+		[Required(ErrorMessage = "You must give your cheese a description")]
+		public string Description { get; set; }
 
-        public CheeseType Type { get; set; }
+		//public CheeseType Type { get; set; }
 
-        public List<SelectListItem> CheeseTypes { get; set; }
+		//public List<SelectListItem> CheeseTypes { get; set; }
+		[Required]
+		[Display(Name = "Category")]
+		public int CategoryID { get; set; }
 
-        public AddCheeseViewModel() {
+		public List<SelectListItem> Categories { get; set; }
 
-            CheeseTypes = new List<SelectListItem>();
+		public AddCheeseViewModel(IEnumerable<CheeseCategory> categories)
+		{
+			
+			Categories = new List<SelectListItem>();
 
-            // <option value="0">Hard</option>
-            CheeseTypes.Add(new SelectListItem {
-                Value = ((int) CheeseType.Hard).ToString(),
-                Text = CheeseType.Hard.ToString()
-            });
+			//private List<CheeseCategory> list = categories.ToList();
+			//Categories = ((List<SelectListItem>)categories);
+			//Categories = categories;
 
+			// <option value="0">Hard</option>
+			Categories.Add(new SelectListItem
+			{
+				Value = CategoryID.ToString(),
+				Text = Name.ToString()
+			});
+			/*
             CheeseTypes.Add(new SelectListItem
             {
                 Value = ((int)CheeseType.Soft).ToString(),
@@ -41,8 +53,13 @@ namespace CheeseMVC.ViewModels
             {
                 Value = ((int)CheeseType.Fake).ToString(),
                 Text = CheeseType.Fake.ToString()
-            });
+            });*/
 
-        }
-    }
+		}
+		//default constructor necessary for model binding
+		public AddCheeseViewModel()
+		{
+
+		}
+	}
 }
