@@ -37,11 +37,14 @@ namespace CheeseMVC.ViewModels
 			//Categories = categories;
 
 			// <option value="0">Hard</option>
-			Categories.Add(new SelectListItem
+			foreach (CheeseCategory category in categories)
 			{
-				Value = CategoryID.ToString(),
-				Text = Name.ToString()
-			});
+				Categories.Add(new SelectListItem
+				{
+					Value = category.ID.ToString(),
+					Text = category.Name.ToString()
+				});
+			}
 			/*
             CheeseTypes.Add(new SelectListItem
             {
@@ -54,7 +57,7 @@ namespace CheeseMVC.ViewModels
                 Value = ((int)CheeseType.Fake).ToString(),
                 Text = CheeseType.Fake.ToString()
             });*/
-
+			//this.Categories = Categories;
 		}
 		//default constructor necessary for model binding
 		public AddCheeseViewModel()
