@@ -1,5 +1,6 @@
 ﻿using CheeseMVC.Data;
 using CheeseMVC.Models;
+using CheeseMVC.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -21,7 +22,6 @@ namespace CheeseMVC.Controllers
 		// GET: /<controller>/
 		public IActionResult Index()
 		{
-			ViewBag.title = "Menus";
 
 			IList<Menu> menus = context.Menus.Include(context => context.Name).ToList();
 
@@ -37,6 +37,15 @@ namespace CheeseMVC.Controllers
 			return View(cheeses);
 		}
 			 */
+
+		}
+
+		[HttpGet]
+		public IActionResult Add()
+		{
+			AddMenuViewModel addMenuViewModel = new AddMenuViewModel();
+
+			return View(addMenuViewModel);
 
 		}
 	}
