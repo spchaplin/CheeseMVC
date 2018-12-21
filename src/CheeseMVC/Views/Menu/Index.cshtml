@@ -1,7 +1,8 @@
-﻿@model List<CheeseMVC.Models.Menu>
-@*
-	could be CheeseMVC.Models.CheeseMenu
-*@
+﻿@model IEnumerable<CheeseMVC.Models.Menu>
+
+<h1>Menus</h1>
+
+<p><a asp-controller="Menu" asp-action="Add">Add Menu</a></p>
 
 <ul>
 @foreach (var menu in Model)
@@ -10,5 +11,5 @@
 }
 </ul>
 
-<a asp-controller="Menu" asp-action="Add">Add Menu</a>
+
 

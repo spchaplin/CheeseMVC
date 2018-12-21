@@ -22,8 +22,8 @@ namespace CheeseMVC.Controllers
 		// GET: /<controller>/
 		public IActionResult Index()
 		{
-
-			IList<Menu> menus = context.Menus.Include(context => context.Name).ToList();
+			/*why is syntax different than IList<Cheese> cheeses = context.Cheeses.Include(context => context.Category).ToList(); ? */
+			IList<Menu> menus = context.Menus.ToList();
 
 			return View(menus);
 
@@ -46,6 +46,51 @@ namespace CheeseMVC.Controllers
 			AddMenuViewModel addMenuViewModel = new AddMenuViewModel();
 
 			return View(addMenuViewModel);
+
+		}
+
+		[HttpPost]
+		public IActionResult Add(AddMenuViewModel addMenuViewModel)
+		{
+			if (ModelState.IsValid)
+			{
+
+				Menu newMenu = new Menu
+				{
+					Name = addMenuViewModel.Name
+				};
+
+				context.Menus.Add(newMenu);
+				context.SaveChanges();
+
+				return Redirect("/Menu/ViewMenu" + newMenu.ID);
+
+			}
+
+			return View(addMenuViewModel);
+
+		}
+
+		// default routing for MVC applications is /{Controller}/{Action}/{id
+		//  /Menu/ViewMenu/5
+		[HttpGet]
+		public IActionResult ViewMenu(int id)
+		{
+			Menu menu = context.Menus.Single(m => m.ID == id);
+
+			List<CheeseMenu> items = context
+				.CheeseMenus
+				.Include(item => item.Cheese)
+				.Where(cm => cm.MenuID == id)
+				.ToList();
+
+			ViewMenuViewModel viewMenuViewModel = new ViewMenuViewModel
+			{
+				Menu = menu,
+				Items = items
+			};
+			
+			return View(viewMenuViewModel);
 
 		}
 	}
